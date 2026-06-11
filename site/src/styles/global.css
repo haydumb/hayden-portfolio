@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0e0a;
+  --color-surface: #10160f;
+  --color-border: #1f3a26;
+  --color-text: #e2e8e0;
+  --color-muted: #8a978a;
+  --color-green: #27c93f;
+  --color-amber: #ffbd2e;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
+body { margin: 0; }
+.prompt::before { content: "$ "; color: var(--color-green); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
