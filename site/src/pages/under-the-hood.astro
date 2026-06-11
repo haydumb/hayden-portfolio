@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BuildBadges from '../components/BuildBadges.astro';
+---
+<BaseLayout title="Under the Hood" description="How this site is built, deployed, and operated.">
+  <section class="py-12">
+    <h1 class="mb-4 font-mono text-2xl font-bold text-[var(--color-text)]">
+      <span class="text-[var(--color-green)]">$</span> cat how-this-site-is-built.md
+    </h1>
+    <BuildBadges />
+    <div class="mt-6 max-w-2xl space-y-4 text-[var(--color-text)]/90">
+      <p>
+        This site is a static Astro build deployed to Cloudflare Pages by a GitHub Actions
+        pipeline that lints, type-checks, runs unit tests, builds, and checks a Lighthouse
+        budget on every push to <code>main</code>. The badges above reflect the real pipeline.
+      </p>
+      <p class="text-[var(--color-muted)]">
+        Coming next: an interactive architecture diagram whose nodes open the actual Helm
+        charts, Terraform, and ArgoCD manifests from this repo.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

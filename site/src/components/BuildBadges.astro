@@ -1,0 +1,11 @@
+---
+const REPO = 'haydumb/hayden-portfolio';
+const badges = [
+  { alt: 'CI status', src: `https://img.shields.io/github/actions/workflow/status/${REPO}/ci.yml?branch=main&label=ci&logo=githubactions&logoColor=white` },
+  { alt: 'Last commit', src: `https://img.shields.io/github/last-commit/${REPO}?logo=git&logoColor=white` },
+  { alt: 'Deployed to Cloudflare Pages', src: 'https://img.shields.io/badge/deploy-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white' },
+];
+---
+<div class="flex flex-wrap items-center gap-2">
+  {badges.map((b) => <img src={b.src} alt={b.alt} height="20" loading="lazy" />)}
+</div>
