@@ -1,0 +1,36 @@
+---
+import BaseLayout from './BaseLayout.astro';
+interface Props {
+  title: string;
+  summary: string;
+  role: string;
+  stack: string[];
+  impact: string[];
+}
+const { title, summary, role, stack, impact } = Astro.props;
+---
+<BaseLayout title={title} description={summary}>
+  <article class="py-12">
+    <a href="/work" class="font-mono text-xs text-[var(--color-muted)] hover:text-[var(--color-green)]">← cd ../work</a>
+    <h1 class="mt-4 font-mono text-3xl font-extrabold text-[var(--color-text)]">{title}</h1>
+    <p class="mt-1 font-mono text-sm text-[var(--color-green)]">{role}</p>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">{summary}</p>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {stack.map((s) => (
+        <span class="rounded border border-[var(--color-border)] px-2 py-0.5 font-mono text-xs text-[var(--color-text)]">{s}</span>
+      ))}
+    </div>
+
+    <div class="mt-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <h2 class="mb-2 font-mono text-sm text-[var(--color-amber)]">Impact</h2>
+      <ul class="list-disc space-y-1 pl-5 text-sm text-[var(--color-text)]/90">
+        {impact.map((i) => <li>{i}</li>)}
+      </ul>
+    </div>
+
+    <div class="prose-invert mt-8 max-w-2xl space-y-4 leading-relaxed text-[var(--color-text)]/90 [&_h2]:mt-8 [&_h2]:font-mono [&_h2]:text-lg [&_h2]:text-[var(--color-green)]">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

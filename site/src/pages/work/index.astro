@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const entries = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Work" description="Selected DevOps and platform engineering case studies.">
+  <section class="py-12">
+    <h1 class="mb-6 font-mono text-2xl font-bold text-[var(--color-text)]">
+      <span class="text-[var(--color-green)]">$</span> ls work
+    </h1>
+    <ul class="space-y-4">
+      {entries.map((e) => (
+        <li class="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+          <a href={`/work/${e.id}`} class="font-mono text-lg text-[var(--color-green)] hover:underline">{e.data.title}</a>
+          <p class="mt-1 text-sm text-[var(--color-muted)]">{e.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
