@@ -1,0 +1,34 @@
+---
+title: The MCP Mesh
+summary: Unified five disparate MCP servers — New Relic, ArgoCD, Snyk, Azure DevOps, and Scalr — behind one coherent interface.
+role: DevOps Engineer @ Accuris
+stack: ['Model Context Protocol', 'New Relic', 'ArgoCD', 'Snyk', 'Azure DevOps', 'Scalr', 'Python']
+impact:
+  - 'One interface across observability, deployment, security scanning, and infrastructure.'
+  - 'Higher query accuracy and lower latency than the prior New Relic integration.'
+  - 'Reduced token consumption on the custom New Relic MCP server.'
+order: 1
+---
+
+## The problem
+
+Engineering work was scattered across five separate tools, each with its own MCP server,
+its own quirks, and its own mental model. Context-switching between New Relic for
+observability, ArgoCD for deployments, Snyk for security, Azure DevOps for work tracking,
+and Scalr for infrastructure was a daily tax on every engineer.
+
+## The approach
+
+I architected an **MCP mesh** — a single coherent interface that unified the five servers.
+Rather than five disconnected endpoints, engineers got one surface that routed intent to the
+right backend, normalized responses, and made cross-tool workflows possible.
+
+Alongside the mesh I built a **custom New Relic MCP server** that outperformed the existing
+solution: it generated more accurate queries, consumed fewer tokens, and returned results
+with lower latency.
+
+## The impact
+
+- A single interface across observability, deployment, security scanning, and infrastructure.
+- Measurably better query accuracy and latency than the previous integration.
+- Lower token cost per interaction, reducing the running cost of the tooling.
