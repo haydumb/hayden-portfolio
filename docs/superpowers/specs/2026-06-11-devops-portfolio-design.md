@@ -21,7 +21,8 @@ technical engineers/platform leads (real Helm charts, GitOps, CI/CD, live archit
 | Visual direction | **Terminal / Hacker, refined** — terminal-first motif with polished, readable long-form content ("a beautifully designed developer tool," not a 1980s CRT) |
 | Hosting | **Cloudflare Pages** (free, custom domain, automatic HTTPS) |
 | Repo | Public monorepo on GitHub |
-| Assets on hand | Domain name, cloud account, public GitHub account |
+| Domain | **hayden-remington.com** (registered on Cloudflare — DNS already in place) |
+| Assets on hand | Domain (above), Cloudflare account, public GitHub account |
 
 ## Site Map & Navigation
 
@@ -95,7 +96,8 @@ Supporting content:
 - Skills matrix grouped: Cloud / CI-CD / IaC / AI-Automation / Observability / Data / Languages.
 - Experience timeline (Accuris → TransCore arc, 2021–2026).
 - Downloadable résumé.
-- Contact: email, GitHub, LinkedIn.
+- Contact: email (haydenr337@gmail.com), GitHub (https://github.com/haydumb),
+  LinkedIn (https://www.linkedin.com/in/remingtonh/).
 
 ## Technical Architecture
 
@@ -130,7 +132,7 @@ who clones the repo.
 
 - **GitHub Actions:** lint + typecheck + build + Lighthouse-CI budget check + deploy to
   **Cloudflare Pages** on push to `main`. Run status feeds the live badges.
-- Custom domain via Cloudflare DNS; automatic HTTPS.
+- Custom domain **hayden-remington.com** via Cloudflare DNS; automatic HTTPS.
 
 ## Quality Bar
 
@@ -141,8 +143,9 @@ who clones the repo.
 ## Phasing
 
 - **Phase 1 (MVP):** Astro skeleton; terminal hero with command registry + non-technical safety
-  net; skills; experience; contact; one case study; deployed via GitHub Actions → Cloudflare
-  Pages with the real pipeline + live badges. A complete, live, impressive site on its own.
+  net; skills; experience; contact; **the MCP Mesh case study** (lead story); deployed via
+  GitHub Actions → Cloudflare Pages at **hayden-remington.com** with the real pipeline + live
+  badges. A complete, live, impressive site on its own.
 - **Phase 2:** remaining case studies + `/under-the-hood` interactive architecture diagram.
 - **Phase 3:** full Helm / Terraform / ArgoCD infra + `make local-k8s`, wired into the diagram's
   clickable files.
