@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship a live, polished, terminal-themed DevOps portfolio at hayden-remington.com — terminal hero with a fully working command system, a non-technical navigation safety net, skills/experience/contact sections, the MCP Mesh case study, and a real GitHub Actions → Cloudflare Pages pipeline with live build badges.
+**Goal:** Ship a live, polished, terminal-themed DevOps portfolio at haydenremington.com — terminal hero with a fully working command system, a non-technical navigation safety net, skills/experience/contact sections, the MCP Mesh case study, and a real GitHub Actions → Cloudflare Pages pipeline with live build badges.
 
 **Architecture:** Astro 5 static site with Tailwind v4 for styling and a single React island for the interactive terminal. All terminal logic (command registry, tokenizer, autocomplete, history, nav-mode persistence) is extracted into pure, unit-tested TypeScript modules under `src/lib/`, so the React component is a thin shell. Content (case studies) lives in an Astro content collection (MDX); skills/experience are typed data modules. CI runs lint + typecheck + unit tests + build + Lighthouse budget, then deploys to Cloudflare Pages.
 
@@ -111,7 +111,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://hayden-remington.com',
+  site: 'https://haydenremington.com',
   integrations: [react(), sitemap()],
   vite: { plugins: [tailwindcss()] },
 });
@@ -216,7 +216,7 @@ export const site = {
   github: 'https://github.com/haydumb',
   linkedin: 'https://www.linkedin.com/in/remingtonh/',
   location: 'Denver, CO',
-  domain: 'hayden-remington.com',
+  domain: 'haydenremington.com',
 } as const;
 ```
 
@@ -1787,7 +1787,7 @@ git commit -m "ci: add build, test, and Cloudflare Pages deploy pipeline"
 - [ ] **Step 1: Create `README.md`**
 
 ```markdown
-# hayden-remington.com
+# haydenremington.com
 
 DevOps / SRE / Platform Engineer portfolio. Static Astro site, deployed to Cloudflare Pages via GitHub Actions.
 
@@ -1825,8 +1825,9 @@ git commit -m "docs: add README"
 These steps require account access and are done in browser UIs:
 - [ ] Create the public GitHub repo `haydumb/hayden-portfolio` and push `main`.
 - [ ] Add GitHub Actions secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+- [ ] **Move `haydenremington.com` DNS to Cloudflare:** in Cloudflare → Add a site (Free plan), verify imported records (especially MX/email), then in Squarespace → Domains → Nameservers set the two Cloudflare nameservers. Wait for the zone to go Active. (Registrar transfer to Cloudflare is optional and can be done later.)
 - [ ] Create the Cloudflare Pages project named `hayden-remington` (first deploy may be via the Actions run).
-- [ ] In Cloudflare Pages → Custom domains, add `hayden-remington.com` and `www`.
+- [ ] In Cloudflare Pages → Custom domains, add `haydenremington.com` and `www` (auto-creates records since the zone is on Cloudflare).
 - [ ] Replace `site/public/resume.pdf` with the real CV.
 - [ ] Verify the live site, the terminal commands, and that the badges show green.
 
