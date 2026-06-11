@@ -1,0 +1,20 @@
+---
+const links = [
+  { label: 'about', href: '/#about' },
+  { label: 'work', href: '/work' },
+  { label: 'under-the-hood', href: '/under-the-hood' },
+  { label: 'contact', href: '/#contact' },
+];
+---
+<nav class="mx-auto flex max-w-4xl items-center gap-2 px-6 py-4 font-mono text-sm" aria-label="Primary">
+  <a href="/" class="text-[var(--color-text)] font-bold">HR<span class="text-[var(--color-green)]">.</span></a>
+  <span class="text-[var(--color-muted)]">~ $ cd</span>
+  <span class="text-[var(--color-muted)]">[</span>
+  {links.map((l, i) => (
+    <>
+      {i > 0 && <span class="text-[var(--color-muted)]">·</span>}
+      <a href={l.href} class="text-[var(--color-text)] hover:text-[var(--color-green)]">{l.label}</a>
+    </>
+  ))}
+  <span class="text-[var(--color-muted)]">]</span>
+</nav>

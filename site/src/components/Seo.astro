@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site';
+interface Props { title?: string; description?: string; }
+const { title, description } = Astro.props;
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.role}`;
+const desc = description ?? site.summary;
+const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+---
+<title>{fullTitle}</title>
+<meta name="description" content={desc} />
+<link rel="canonical" href={url} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={desc} />
+<meta property="og:url" content={url} />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />

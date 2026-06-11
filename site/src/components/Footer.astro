@@ -1,0 +1,11 @@
+---
+import { site } from '../data/site';
+---
+<footer class="mx-auto max-w-4xl px-6 py-10 font-mono text-xs text-[var(--color-muted)]">
+  <div class="flex flex-wrap gap-4">
+    <a href={`mailto:${site.email}`} class="hover:text-[var(--color-green)]">{site.email}</a>
+    <a href={site.github} class="hover:text-[var(--color-green)]">github</a>
+    <a href={site.linkedin} class="hover:text-[var(--color-green)]">linkedin</a>
+  </div>
+  <p class="mt-3">© {new Date().getFullYear()} {site.name}. Built with Astro, deployed on Cloudflare Pages.</p>
+</footer>
