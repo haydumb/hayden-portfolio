@@ -110,6 +110,7 @@ export default function Terminal() {
             onClick={(e) => { e.stopPropagation(); setShowHelp((s) => !s); }}
             className="rounded-md border border-[var(--color-green)] px-2.5 py-1 text-xs text-[var(--color-green)]"
             aria-expanded={showHelp}
+            aria-controls="commands-help-panel"
           >
             ? Commands <span aria-hidden="true">▾</span>
           </button>
@@ -124,7 +125,7 @@ export default function Terminal() {
       </div>
 
       {showHelp && (
-        <div className="mb-3" onClick={(e) => e.stopPropagation()}>
+        <div id="commands-help-panel" className="mb-3" onClick={(e) => e.stopPropagation()}>
           <CommandsHelp onRun={(name) => { setShowHelp(false); execute(name); }} />
         </div>
       )}
