@@ -44,7 +44,9 @@ export default function Terminal() {
       const a = document.createElement('a');
       a.href = result.action.target;
       a.download = '';
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
     }
     if (result.action?.type !== 'clear') {
       setBlocks((b) => [...b, { input: raw, output: result.output }]);
@@ -83,7 +85,7 @@ export default function Terminal() {
             onClick={() => switchMode('terminal')}
             className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] hover:text-[var(--color-text)]"
           >
-            ⌨ Use the terminal
+            <span aria-hidden="true">⌨</span> Use the terminal
           </button>
         </div>
         <GuiMenu />
@@ -109,14 +111,14 @@ export default function Terminal() {
             className="rounded-md border border-[var(--color-green)] px-2.5 py-1 text-xs text-[var(--color-green)]"
             aria-expanded={showHelp}
           >
-            ? Commands ▾
+            ? Commands <span aria-hidden="true">▾</span>
           </button>
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); switchMode('gui'); }}
             className="rounded-md border border-[var(--color-border)] px-2.5 py-1 text-xs text-[var(--color-muted)]"
           >
-            ☰ Browse without terminal
+            <span aria-hidden="true">☰</span> Browse without terminal
           </button>
         </div>
       </div>
