@@ -4,7 +4,7 @@ import { site } from '../../data/site';
 import { skillGroups } from '../../data/skills';
 import { experience } from '../../data/experience';
 
-// Keep in sync with content/work entries. Phase 2 can generate this list.
+// Keep in sync with content/work/*.mdx slugs. Phase 2 can generate this list.
 const WORK = [{ slug: 'mcp-mesh', title: 'The MCP Mesh' }];
 
 function line(text: string, tone: OutputLine['tone'] = 'default'): OutputLine {
@@ -67,6 +67,7 @@ const cat: Command = {
   description: 'read a case study (e.g. cat work/mcp-mesh)',
   run: (args) => {
     const target = args[0] ?? '';
+    if (!target) return { output: [line('Usage: cat work/<slug>', 'error')] };
     const slug = target.replace(/^work\//, '');
     const found = WORK.find((w) => w.slug === slug);
     if (!found) return { output: [line(`cat: ${target}: No such file`, 'error')] };

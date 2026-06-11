@@ -49,4 +49,15 @@ describe('command registry', () => {
   it('blank input returns no output', () => {
     expect(runCommand('   ').output).toEqual([]);
   });
+
+  it('commandRegistry is keyed by command name', () => {
+    expect(commandRegistry['whoami'].name).toBe('whoami');
+    expect(commandRegistry['under-the-hood'].name).toBe('under-the-hood');
+  });
+
+  it('cat with no argument shows usage', () => {
+    const res = runCommand('cat');
+    expect(res.output[0].tone).toBe('error');
+    expect(res.output[0].text).toContain('Usage');
+  });
 });
