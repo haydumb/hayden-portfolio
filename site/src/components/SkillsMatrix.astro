@@ -1,0 +1,15 @@
+---
+import { skillGroups } from '../data/skills';
+---
+<div class="grid gap-4 sm:grid-cols-2">
+  {skillGroups.map((g) => (
+    <div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <h3 class="mb-2 font-mono text-sm text-[var(--color-green)]">{g.category}</h3>
+      <ul class="flex flex-wrap gap-2">
+        {g.skills.map((s) => (
+          <li class="rounded border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text)]">{s}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

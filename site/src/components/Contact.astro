@@ -1,0 +1,11 @@
+---
+import { site } from '../data/site';
+---
+<div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 font-mono text-sm">
+  <p class="text-[var(--color-muted)]">Open to DevOps / Platform / SRE roles.</p>
+  <div class="mt-4 space-y-1">
+    <p><span class="text-[var(--color-amber)]">email:</span>    <a class="hover:text-[var(--color-green)]" href={`mailto:${site.email}`}>{site.email}</a></p>
+    <p><span class="text-[var(--color-amber)]">github:</span>   <a class="hover:text-[var(--color-green)]" href={site.github}>{site.github}</a></p>
+    <p><span class="text-[var(--color-amber)]">linkedin:</span> <a class="hover:text-[var(--color-green)]" href={site.linkedin}>{site.linkedin}</a></p>
+  </div>
+</div>

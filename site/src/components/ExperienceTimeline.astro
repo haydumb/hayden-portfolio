@@ -1,0 +1,15 @@
+---
+import { experience } from '../data/experience';
+---
+<ol class="relative border-l border-[var(--color-border)]">
+  {experience.map((job) => (
+    <li class="mb-8 ml-6">
+      <span class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full bg-[var(--color-green)]"></span>
+      <h3 class="font-mono text-base text-[var(--color-text)]">{job.title} <span class="text-[var(--color-muted)]">@ {job.company}</span></h3>
+      <p class="font-mono text-xs text-[var(--color-muted)]">{job.start} – {job.end} · {job.location}</p>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--color-text)]/90">
+        {job.highlights.map((h) => <li>{h}</li>)}
+      </ul>
+    </li>
+  ))}
+</ol>
