@@ -4,12 +4,18 @@ import { complete } from '../lib/terminal/autocomplete';
 import { navigateHistory } from '../lib/terminal/history';
 import type { OutputLine } from '../lib/terminal/types';
 import { getMode, setMode, type NavMode } from '../lib/mode';
+import { applyTheme, type Theme } from '../lib/theme';
 import GuiMenu from './GuiMenu';
 import CommandsHelp from './CommandsHelp';
 
 interface Block {
   input: string;
   output: OutputLine[];
+}
+
+interface WorkItem {
+  slug: string;
+  title: string;
 }
 
 const toneClass: Record<NonNullable<OutputLine['tone']>, string> = {
@@ -20,7 +26,7 @@ const toneClass: Record<NonNullable<OutputLine['tone']>, string> = {
   error: 'text-red-400',
 };
 
-export default function Terminal() {
+export default function Terminal({ work = [] }: { work?: WorkItem[] }) {
   const [mode, setModeState] = useState<NavMode>('terminal');
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [value, setValue] = useState('');
@@ -34,12 +40,14 @@ export default function Terminal() {
   useEffect(() => endRef.current?.scrollIntoView?.({ block: 'end' }), [blocks]);
 
   function execute(raw: string) {
-    const result = runCommand(raw);
+    const result = runCommand(raw, { history, work });
     if (result.action?.type === 'clear') {
       setBlocks([]);
     } else if (result.action?.type === 'navigate' && result.action.target) {
       window.location.assign(result.action.target);
       return;
+    } else if (result.action?.type === 'theme' && result.action.target) {
+      applyTheme(result.action.target as Theme);
     } else if (result.action?.type === 'download' && result.action.target) {
       const a = document.createElement('a');
       a.href = result.action.target;

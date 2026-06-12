@@ -3,7 +3,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Terminal from './Terminal';
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  delete document.documentElement.dataset.theme;
+});
 
 describe('Terminal', () => {
   it('runs a typed command and shows output', async () => {
@@ -36,5 +39,21 @@ describe('Terminal', () => {
     await user.click(screen.getByRole('button', { name: /\? commands/i }));
     await user.click(screen.getByRole('button', { name: /whoami/i }));
     expect(await screen.findByText(/Hayden Remington/)).toBeInTheDocument();
+  });
+
+  it('applies a theme via the theme command', async () => {
+    const user = userEvent.setup();
+    render(<Terminal />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+    await user.type(input, 'theme matrix{enter}');
+    expect(document.documentElement.dataset.theme).toBe('matrix');
+  });
+
+  it('lists case studies from the work prop', async () => {
+    const user = userEvent.setup();
+    render(<Terminal work={[{ slug: 'mcp-mesh', title: 'The MCP Mesh' }]} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+    await user.type(input, 'ls work{enter}');
+    expect(await screen.findByText(/work\/mcp-mesh/)).toBeInTheDocument();
   });
 });
