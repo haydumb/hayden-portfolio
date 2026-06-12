@@ -19,3 +19,20 @@ body { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Alternate terminal themes (applied via <html data-theme="...">). Accent-only; contrast kept AA. */
+html[data-theme="matrix"] {
+  --color-green: #00ff66;
+  --color-amber: #66ff99;
+  --color-text: #d8ffe6;
+}
+html[data-theme="amber"] {
+  --color-green: #ffb000;
+  --color-amber: #ffcf4d;
+  --color-text: #f6e7c8;
+}
+html[data-theme="mono"] {
+  --color-green: #cbd5cb;
+  --color-amber: #e8eee8;
+  --color-text: #e6ece6;
+}
