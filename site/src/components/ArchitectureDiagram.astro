@@ -1,0 +1,108 @@
+---
+import { Code } from 'astro:components';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+function readRepoFile(rel: string): string {
+  try {
+    return readFileSync(path.resolve(process.cwd(), rel), 'utf8');
+  } catch {
+    return '# (file unavailable at build time)';
+  }
+}
+
+const REPO = 'https://github.com/haydumb/hayden-portfolio/blob/main';
+
+const files: Record<string, { code: string; lang: string; gh: string; label: string }> = {
+  ci:        { code: readRepoFile('../.github/workflows/ci.yml'),              lang: 'yaml',   gh: '.github/workflows/ci.yml',              label: 'GitHub Actions — CI/CD pipeline' },
+  astro:     { code: readRepoFile('astro.config.mjs'),                          lang: 'js',     gh: 'site/astro.config.mjs',                 label: 'Astro build config' },
+  docker:    { code: readRepoFile('../infra/Dockerfile'),                       lang: 'bash',   gh: 'infra/Dockerfile',                      label: 'Dockerfile (multi-stage)' },
+  values:    { code: readRepoFile('../infra/helm/values.yaml'),                 lang: 'yaml',   gh: 'infra/helm/values.yaml',                label: 'Helm chart — values.yaml' },
+  k8s:       { code: readRepoFile('../infra/helm/templates/deployment.yaml'),   lang: 'yaml',   gh: 'infra/helm/templates/deployment.yaml',  label: 'Kubernetes Deployment (Helm template)' },
+  argocd:    { code: readRepoFile('../infra/argocd/application.yaml'),           lang: 'yaml',   gh: 'infra/argocd/application.yaml',          label: 'ArgoCD Application (GitOps)' },
+  terraform: { code: readRepoFile('../infra/terraform/main.tf'),                lang: 'ini',    gh: 'infra/terraform/main.tf',               label: 'Terraform — Cloudflare Pages + DNS' },
+};
+
+const liveLane = [
+  { id: null,        title: 'GitHub repo' },
+  { id: 'ci',        title: 'GitHub Actions' },
+  { id: 'astro',     title: 'Astro build' },
+  { id: 'terraform', title: 'Cloudflare Pages' },
+];
+const gitopsLane = [
+  { id: 'docker', title: 'Dockerfile' },
+  { id: 'values', title: 'Helm chart' },
+  { id: 'argocd', title: 'ArgoCD' },
+  { id: 'k8s',    title: 'Kubernetes' },
+];
+---
+<div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+  <p class="mb-4 font-mono text-xs text-[var(--color-muted)]">
+    Two real delivery paths. Click any node to read the actual config from this repo.
+  </p>
+
+  <div class="space-y-5">
+    <div>
+      <p class="mb-2 font-mono text-[10px] uppercase tracking-widest text-[var(--color-green)]">Live path · deploys production</p>
+      <div class="flex flex-wrap items-center gap-2">
+        {liveLane.map((n, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true" class="text-[var(--color-muted)]">→</span>}
+            {n.id ? (
+              <button data-arch-node={n.id} aria-pressed="false" type="button"
+                class="arch-node rounded-md border border-[var(--color-border)] px-3 py-2 font-mono text-xs text-[var(--color-text)] transition hover:border-[var(--color-green)] aria-pressed:border-[var(--color-green)] aria-pressed:text-[var(--color-green)]">
+                {n.title}
+              </button>
+            ) : (
+              <span class="rounded-md border border-dashed border-[var(--color-border)] px-3 py-2 font-mono text-xs text-[var(--color-muted)]">{n.title}</span>
+            )}
+          </>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-2 font-mono text-[10px] uppercase tracking-widest text-[var(--color-amber)]">GitOps path · reproducible on any cluster (make local-k8s)</p>
+      <div class="flex flex-wrap items-center gap-2">
+        {gitopsLane.map((n, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true" class="text-[var(--color-muted)]">→</span>}
+            <button data-arch-node={n.id} aria-pressed="false" type="button"
+              class="arch-node rounded-md border border-[var(--color-border)] px-3 py-2 font-mono text-xs text-[var(--color-text)] transition hover:border-[var(--color-amber)] aria-pressed:border-[var(--color-amber)] aria-pressed:text-[var(--color-amber)]">
+              {n.title}
+            </button>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <div data-arch-panel="intro" class="font-mono text-xs text-[var(--color-muted)]">
+      ↑ Pick a node to inspect the real Dockerfile, Helm chart, ArgoCD app, Terraform, or CI pipeline behind this site.
+    </div>
+    {Object.entries(files).map(([key, f]) => (
+      <div data-arch-panel={key} class="hidden">
+        <div class="mb-2 flex items-center justify-between">
+          <span class="font-mono text-xs text-[var(--color-amber)]">{f.label}</span>
+          <a href={`${REPO}/${f.gh}`} target="_blank" rel="noopener" class="font-mono text-xs text-[var(--color-muted)] hover:text-[var(--color-green)]">View on GitHub ↗</a>
+        </div>
+        <div class="max-h-96 overflow-auto rounded-md text-xs [&_pre]:p-3">
+          <Code code={f.code} lang={f.lang as any} theme="github-dark" />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const nodes = Array.from(document.querySelectorAll('[data-arch-node]'));
+    const panels = Array.from(document.querySelectorAll('[data-arch-panel]'));
+    function select(id) {
+      panels.forEach((p) => p.classList.toggle('hidden', p.getAttribute('data-arch-panel') !== id));
+      nodes.forEach((n) => n.setAttribute('aria-pressed', String(n.getAttribute('data-arch-node') === id)));
+    }
+    nodes.forEach((n) => n.addEventListener('click', () => select(n.getAttribute('data-arch-node'))));
+  })();
+</script>

@@ -1,22 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BuildBadges from '../components/BuildBadges.astro';
+import GitHubPanel from '../components/GitHubPanel.astro';
+import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
 ---
-<BaseLayout title="Under the Hood" description="How this site is built, deployed, and operated.">
+<BaseLayout title="Under the Hood" description="How this site is built, deployed, and operated — with the real config behind every node.">
   <section class="py-12">
     <h1 class="mb-4 font-mono text-2xl font-bold text-[var(--color-text)]">
       <span class="text-[var(--color-green)]">$</span> cat how-this-site-is-built.md
     </h1>
-    <BuildBadges />
-    <div class="mt-6 max-w-2xl space-y-4 text-[var(--color-text)]/90">
+    <div class="mb-6 grid gap-4 sm:grid-cols-2">
+      <BuildBadges />
+      <GitHubPanel />
+    </div>
+
+    <h2 class="mb-3 mt-8 font-mono text-lg text-[var(--color-amber)]">
+      <span class="text-[var(--color-green)]">$</span> architecture
+    </h2>
+    <ArchitectureDiagram />
+
+    <div class="mt-8 max-w-2xl space-y-4 text-[var(--color-text)]/90">
       <p>
-        This site is a static Astro build deployed to Cloudflare Pages by a GitHub Actions
-        pipeline that lints, type-checks, runs unit tests, builds, and checks a Lighthouse
-        budget on every push to <code>main</code>. The badges above reflect the real pipeline.
+        The <strong>live path</strong> deploys this site: a push to <code>main</code> triggers GitHub Actions
+        (lint, type-check, tests, build, Lighthouse budget) which deploys the static output to Cloudflare Pages.
       </p>
-      <p class="text-[var(--color-muted)]">
-        Coming next: an interactive architecture diagram whose nodes open the actual Helm
-        charts, Terraform, and ArgoCD manifests from this repo.
+      <p>
+        The <strong>GitOps path</strong> is a real, reproducible Kubernetes deployment — the same site
+        containerized and shipped via a Helm chart managed by ArgoCD. Run it locally with
+        <code>make local-k8s</code> (kind). The nodes above open the actual files from this repo.
       </p>
     </div>
   </section>

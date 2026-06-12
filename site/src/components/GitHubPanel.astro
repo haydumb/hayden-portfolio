@@ -1,0 +1,49 @@
+---
+const REPO = 'haydumb/hayden-portfolio';
+let data: { sha?: string; date?: string; message?: string; runStatus?: string; runUrl?: string } | null = null;
+try {
+  const headers = { 'User-Agent': 'hayden-portfolio-build', Accept: 'application/vnd.github+json' };
+  const [commitRes, runRes] = await Promise.all([
+    fetch(`https://api.github.com/repos/${REPO}/commits/main`, { headers }),
+    fetch(`https://api.github.com/repos/${REPO}/actions/workflows/ci.yml/runs?per_page=1`, { headers }),
+  ]);
+  if (commitRes.ok) {
+    const c = await commitRes.json();
+    data = {
+      sha: typeof c.sha === 'string' ? c.sha.slice(0, 7) : undefined,
+      date: c.commit?.committer?.date,
+      message: typeof c.commit?.message === 'string' ? c.commit.message.split('\n')[0] : undefined,
+    };
+  }
+  if (runRes.ok) {
+    const r = await runRes.json();
+    const run = Array.isArray(r.workflow_runs) ? r.workflow_runs[0] : undefined;
+    if (run) data = { ...(data ?? {}), runStatus: run.conclusion || run.status, runUrl: run.html_url };
+  }
+} catch {
+  data = null;
+}
+const actionsUrl = `https://github.com/${REPO}/actions`;
+---
+<div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 font-mono text-xs">
+  <p class="mb-3 text-[10px] uppercase tracking-widest text-[var(--color-green)]">Live pipeline status</p>
+  {data ? (
+    <div class="space-y-1 text-[var(--color-text)]/90">
+      {data.sha && <p><span class="text-[var(--color-amber)]">last commit:</span> {data.sha}{data.message ? ` — ${data.message}` : ''}</p>}
+      {data.date && <p><span class="text-[var(--color-amber)]">committed:</span> {new Date(data.date).toUTCString()}</p>}
+      {data.runStatus && (
+        <p>
+          <span class="text-[var(--color-amber)]">last CI run:</span>{' '}
+          <span class={data.runStatus === 'success' ? 'text-[var(--color-green)]' : 'text-[var(--color-muted)]'}>{data.runStatus}</span>
+          {data.runUrl && <a href={data.runUrl} target="_blank" rel="noopener" class="ml-2 text-[var(--color-muted)] hover:text-[var(--color-green)]">view ↗</a>}
+        </p>
+      )}
+      <p class="text-[var(--color-muted)]">Fetched from the GitHub API at build time.</p>
+    </div>
+  ) : (
+    <p class="text-[var(--color-muted)]">
+      Live status unavailable at build. See the
+      <a href={actionsUrl} target="_blank" rel="noopener" class="text-[var(--color-green)] hover:underline">GitHub Actions runs ↗</a>.
+    </p>
+  )}
+</div>
