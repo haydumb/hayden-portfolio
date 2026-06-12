@@ -3,8 +3,38 @@ import '../styles/global.css';
 import Seo from '../components/Seo.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import CommandPalette, { type PaletteItem } from '../components/CommandPalette.tsx';
+import { getCollection } from 'astro:content';
+import { site } from '../data/site';
+
 interface Props { title?: string; description?: string; }
 const { title, description } = Astro.props;
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+
+const paletteItems: PaletteItem[] = [
+  { id: 'home', label: 'Home', kind: 'link', href: '/' },
+  { id: 'work', label: 'Work', kind: 'link', href: '/work', keywords: 'projects case studies' },
+  { id: 'under', label: 'Under the Hood', kind: 'link', href: '/under-the-hood', keywords: 'infra architecture devops' },
+  { id: 'about', label: 'About', kind: 'link', href: '/#about', keywords: 'whoami bio' },
+  { id: 'skills', label: 'Skills', kind: 'link', href: '/#skills', keywords: 'tech stack tools' },
+  { id: 'experience', label: 'Experience', kind: 'link', href: '/#experience', keywords: 'timeline career' },
+  { id: 'contact', label: 'Contact', kind: 'link', href: '/#contact', keywords: 'email hire' },
+  { id: 'resume', label: 'Download résumé', kind: 'link', href: '/resume.pdf', keywords: 'cv pdf' },
+  { id: 'github', label: 'GitHub', kind: 'link', href: site.github, keywords: 'code source' },
+  { id: 'linkedin', label: 'LinkedIn', kind: 'link', href: site.linkedin, keywords: 'profile' },
+  ...work.map((w) => ({
+    id: `work-${w.id}`,
+    label: `Case study: ${w.data.title}`,
+    kind: 'link' as const,
+    href: `/work/${w.id}`,
+    keywords: 'project case study',
+  })),
+  { id: 'theme-matrix', label: 'Theme: Matrix', kind: 'theme', theme: 'matrix', keywords: 'color green' },
+  { id: 'theme-amber', label: 'Theme: Amber', kind: 'theme', theme: 'amber', keywords: 'color crt' },
+  { id: 'theme-mono', label: 'Theme: Mono', kind: 'theme', theme: 'mono', keywords: 'color grayscale' },
+  { id: 'theme-terminal', label: 'Theme: Terminal (default)', kind: 'theme', theme: 'terminal', keywords: 'color reset green' },
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -12,6 +42,14 @@ const { title, description } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Seo title={title} description={description} />
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('site-theme');
+        if (t && ['matrix', 'amber', 'mono'].indexOf(t) !== -1) {
+          document.documentElement.dataset.theme = t;
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <Nav />
@@ -19,5 +57,6 @@ const { title, description } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <CommandPalette client:idle items={paletteItems} />
   </body>
 </html>

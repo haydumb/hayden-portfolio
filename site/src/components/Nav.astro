@@ -17,4 +17,10 @@ const links = [
     </>
   ))}
   <span class="text-[var(--color-muted)]">]</span>
+  <button
+    type="button"
+    aria-label="Open command palette"
+    onclick="window.dispatchEvent(new Event('open-command-palette'))"
+    class="ml-auto rounded-md border border-[var(--color-border)] px-2 py-1 text-xs text-[var(--color-muted)] hover:border-[var(--color-green)] hover:text-[var(--color-green)]"
+  >⌘K</button>
 </nav>
