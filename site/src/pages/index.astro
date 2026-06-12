@@ -5,6 +5,7 @@ import SkillsMatrix from '../components/SkillsMatrix.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import Contact from '../components/Contact.astro';
 import Terminal from '../components/Terminal.tsx';
+import MetricsStrip from '../components/MetricsStrip.tsx';
 import { site } from '../data/site';
 ---
 <BaseLayout>
@@ -16,6 +17,10 @@ import { site } from '../data/site';
       <Terminal client:load />
     </div>
   </section>
+
+  <div class="border-y border-[var(--color-border)] py-8">
+    <MetricsStrip client:visible />
+  </div>
 
   <Section id="about" title="whoami">
     <p class="max-w-2xl text-[var(--color-text)]/90">
