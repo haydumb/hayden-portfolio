@@ -1,0 +1,59 @@
+---
+const REPO = 'haydumb/hayden-portfolio';
+const workflowUrl = `https://github.com/${REPO}/actions/workflows/gitops-verify.yml`;
+
+let run: { status?: string; date?: string; sha?: string; url?: string } | null = null;
+try {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/actions/workflows/gitops-verify.yml/runs?per_page=1`,
+    {
+      headers: { 'User-Agent': 'hayden-portfolio-build', Accept: 'application/vnd.github+json' },
+      signal: AbortSignal.timeout(5000),
+    },
+  );
+  if (res.ok) {
+    const data = await res.json();
+    const r = Array.isArray(data.workflow_runs) ? data.workflow_runs[0] : undefined;
+    if (r) {
+      run = {
+        status: r.conclusion || r.status,
+        date: r.updated_at || r.created_at,
+        sha: typeof r.head_sha === 'string' ? r.head_sha.slice(0, 7) : undefined,
+        url: r.html_url,
+      };
+    }
+  }
+} catch {
+  run = null;
+}
+
+const verified = run?.status === 'success';
+const borderClass = verified ? 'border-[var(--color-green)]' : 'border-[var(--color-border)]';
+---
+<div class={`rounded-xl border ${borderClass} bg-[var(--color-surface)] p-4 font-mono text-xs`}>
+  <p class="mb-2 text-[10px] uppercase tracking-widest text-[var(--color-green)]">GitOps deployment</p>
+  {run ? (
+    <div class="space-y-1 text-[var(--color-text)]/90">
+      {verified ? (
+        <p class="text-sm text-[var(--color-green)]">
+          verified ✓ — this Helm chart deploys to a real Kubernetes cluster and serves the site, checked in CI.
+        </p>
+      ) : (
+        <p class="text-sm text-[var(--color-amber)]">last run: {run.status}</p>
+      )}
+      <p class="text-[var(--color-muted)]">
+        {run.sha && <span>commit {run.sha}</span>}
+        {run.sha && run.date && <span> · </span>}
+        {run.date && <span>{new Date(run.date).toUTCString()}</span>}
+      </p>
+      <a href={run.url ?? workflowUrl} target="_blank" rel="noopener" class="text-[var(--color-muted)] hover:text-[var(--color-green)]">
+        see the run logs ↗
+      </a>
+    </div>
+  ) : (
+    <p class="text-[var(--color-muted)]">
+      Verification status unavailable at build. See the
+      <a href={workflowUrl} target="_blank" rel="noopener" class="text-[var(--color-green)] hover:underline">gitops-verify runs ↗</a>.
+    </p>
+  )}
+</div>

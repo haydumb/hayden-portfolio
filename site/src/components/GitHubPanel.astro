@@ -3,9 +3,10 @@ const REPO = 'haydumb/hayden-portfolio';
 let data: { sha?: string; date?: string; message?: string; runStatus?: string; runUrl?: string } | null = null;
 try {
   const headers = { 'User-Agent': 'hayden-portfolio-build', Accept: 'application/vnd.github+json' };
+  const opts = { headers, signal: AbortSignal.timeout(5000) };
   const [commitRes, runRes] = await Promise.all([
-    fetch(`https://api.github.com/repos/${REPO}/commits/main`, { headers }),
-    fetch(`https://api.github.com/repos/${REPO}/actions/workflows/ci.yml/runs?per_page=1`, { headers }),
+    fetch(`https://api.github.com/repos/${REPO}/commits/main`, opts),
+    fetch(`https://api.github.com/repos/${REPO}/actions/workflows/ci.yml/runs?per_page=1`, opts),
   ]);
   if (commitRes.ok) {
     const c = await commitRes.json();
