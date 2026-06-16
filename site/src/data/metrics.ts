@@ -7,7 +7,7 @@ export interface Metric {
 
 export const metrics: Metric[] = [
   { value: 7, suffix: '+', label: 'years in DevOps' },
-  { value: 30, prefix: '−', suffix: '%', label: 'faster deploys' },
-  { value: 25, prefix: '−', suffix: '%', label: 'lower cloud cost' },
+  { value: 30, prefix: '-', suffix: '%', label: 'faster deploys' },
+  { value: 25, prefix: '-', suffix: '%', label: 'lower cloud cost' },
   { value: 5, label: 'MCP servers unified' },
 ];

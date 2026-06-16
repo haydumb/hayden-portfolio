@@ -1,34 +1,32 @@
 ---
 title: Custom New Relic MCP Server
-summary: Built a Model Context Protocol server for New Relic that beat the existing integration on query accuracy, token cost, and response latency.
+summary: Wrote a Model Context Protocol server for New Relic that beat the existing one on query accuracy, token cost, and speed.
 role: DevOps Engineer @ Accuris
 stack: ['Model Context Protocol', 'New Relic', 'NRQL', 'Python', 'LLM tooling']
 impact:
-  - 'Higher NRQL query-generation accuracy than the existing integration.'
-  - 'Lower token consumption per request, reducing running cost.'
-  - 'Lower response latency for day-to-day observability questions.'
+  - 'More accurate NRQL than the integration it replaced.'
+  - 'Fewer tokens per request, so it cost less to run.'
+  - 'Faster responses for everyday observability questions.'
 order: 2
 ---
 
 ## The problem
 
-The existing New Relic integration our engineers reached for was expensive and imprecise.
-It generated NRQL that frequently missed the intent of the question, burned through tokens
-on verbose round-trips, and was slow enough that people went back to clicking through the UI
-instead of asking for what they needed.
+The New Relic integration our engineers were using was expensive and not very accurate. It wrote
+NRQL that often missed what people were actually asking, used a lot of tokens going back and forth,
+and was slow enough that people gave up and clicked through the UI instead.
 
 ## The approach
 
-I built a **custom Model Context Protocol (MCP) server** for New Relic from the ground up,
-tuned specifically for how our teams actually query observability data. It exposed focused,
-well-described tools, constrained the model toward valid NRQL, and trimmed the context sent on
-each call so responses came back faster and cheaper.
+I wrote a custom MCP server for New Relic from scratch, built around how our teams actually query
+their data. It exposed a small set of well-described tools, kept the model pointed at valid NRQL,
+and trimmed the context on each call so answers came back faster and cheaper.
 
-Because it spoke MCP, it dropped straight into the same client surface as the rest of our
-tooling — and later became one of the servers unified by the [MCP mesh](/work/mcp-mesh).
+Because it spoke MCP, it slotted right into the same setup as the rest of our tooling. It later
+became one of the servers behind the [MCP mesh](/work/mcp-mesh).
 
 ## The impact
 
-- **More accurate** NRQL generation than the solution it replaced.
-- **Fewer tokens** per request — a direct, recurring cost saving.
-- **Lower latency**, which is what actually got people to adopt it.
+- More accurate NRQL than the tool it replaced.
+- Fewer tokens per request, which was a steady cost saving.
+- Faster responses, which is what actually got people to use it.

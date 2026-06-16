@@ -5,7 +5,7 @@ import GitHubPanel from '../components/GitHubPanel.astro';
 import GitOpsProof from '../components/GitOpsProof.astro';
 import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
 ---
-<BaseLayout title="Under the Hood" description="How this site is built, deployed, and operated — with the real config behind every node.">
+<BaseLayout title="Under the Hood" description="How this site is built, deployed, and run, with the real config behind every node.">
   <section class="py-12">
     <h1 class="mb-4 font-mono text-2xl font-bold text-[var(--color-text)]">
       <span class="text-[var(--color-green)]">$</span> cat how-this-site-is-built.md
@@ -26,15 +26,16 @@ import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
 
     <div class="mt-8 max-w-2xl space-y-4 text-[var(--color-text)]/90">
       <p>
-        The <strong>live path</strong> deploys this site: a push to <code>main</code> triggers GitHub Actions
-        (lint, type-check, tests, build, Lighthouse budget) which deploys the static output to Cloudflare Pages.
+        The <strong>live path</strong> is what deploys this site. A push to <code>main</code> kicks off
+        GitHub Actions (lint, type-check, tests, build, and a Lighthouse budget), then ships the static
+        output to Cloudflare Pages.
       </p>
       <p>
-        The <strong>GitOps path</strong> isn't just a claim — it's <strong>verified on every change</strong>.
-        A CI job builds the container, stands up a real Kubernetes cluster (kind), deploys this exact Helm
-        chart, and smoke-tests the running pod (HTTP 200 + content check). The proof above links to the
-        captured <code>kubectl</code>/Helm output. Run the same thing locally with <code>make local-k8s</code>,
-        and click any node above to read the real config.
+        The <strong>GitOps path</strong> isn't just talk. It's <strong>checked on every change</strong>.
+        A CI job builds the container, spins up a real Kubernetes cluster with kind, deploys this exact Helm
+        chart, and hits the running pod to confirm it serves (HTTP 200 plus a content check). The proof above
+        links to the actual <code>kubectl</code> and Helm output. You can run the same thing locally with
+        <code>make local-k8s</code>, and you can click any node above to read the real config.
       </p>
     </div>
   </section>

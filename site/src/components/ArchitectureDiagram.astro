@@ -14,13 +14,13 @@ function readRepoFile(rel: string): string {
 const REPO = 'https://github.com/haydumb/hayden-portfolio/blob/main';
 
 const files: Record<string, { code: string; lang: string; gh: string; label: string }> = {
-  ci:        { code: readRepoFile('../.github/workflows/ci.yml'),              lang: 'yaml',   gh: '.github/workflows/ci.yml',              label: 'GitHub Actions — CI/CD pipeline' },
+  ci:        { code: readRepoFile('../.github/workflows/ci.yml'),              lang: 'yaml',   gh: '.github/workflows/ci.yml',              label: 'GitHub Actions: CI/CD pipeline' },
   astro:     { code: readRepoFile('astro.config.mjs'),                          lang: 'js',     gh: 'site/astro.config.mjs',                 label: 'Astro build config' },
   docker:    { code: readRepoFile('../infra/Dockerfile'),                       lang: 'bash',   gh: 'infra/Dockerfile',                      label: 'Dockerfile (multi-stage)' },
-  values:    { code: readRepoFile('../infra/helm/values.yaml'),                 lang: 'yaml',   gh: 'infra/helm/values.yaml',                label: 'Helm chart — values.yaml' },
+  values:    { code: readRepoFile('../infra/helm/values.yaml'),                 lang: 'yaml',   gh: 'infra/helm/values.yaml',                label: 'Helm chart: values.yaml' },
   k8s:       { code: readRepoFile('../infra/helm/templates/deployment.yaml'),   lang: 'yaml',   gh: 'infra/helm/templates/deployment.yaml',  label: 'Kubernetes Deployment (Helm template)' },
   argocd:    { code: readRepoFile('../infra/argocd/application.yaml'),           lang: 'yaml',   gh: 'infra/argocd/application.yaml',          label: 'ArgoCD Application (GitOps)' },
-  terraform: { code: readRepoFile('../infra/terraform/main.tf'),                lang: 'ini',    gh: 'infra/terraform/main.tf',               label: 'Terraform — Cloudflare Pages + DNS' },
+  terraform: { code: readRepoFile('../infra/terraform/main.tf'),                lang: 'ini',    gh: 'infra/terraform/main.tf',               label: 'Terraform: Cloudflare Pages and DNS' },
 };
 
 const liveLane = [

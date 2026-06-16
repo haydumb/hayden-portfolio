@@ -88,7 +88,7 @@ export default function CommandPalette({ items }: { items: PaletteItem[] }) {
           autoFocus
           aria-label="Command palette search"
           className="w-full bg-transparent px-4 py-3 text-sm text-[var(--color-text)] outline-none"
-          placeholder="Jump to… (type to filter)"
+          placeholder="Jump to anything (type to filter)"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onInputKey}

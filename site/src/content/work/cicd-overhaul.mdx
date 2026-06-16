@@ -1,31 +1,30 @@
 ---
 title: CI/CD Pipeline Overhaul
-summary: Rebuilt Azure DevOps pipelines and added nightly automated testing, cutting deployment time by 30% and reducing post-deploy issues.
+summary: Rebuilt the Azure DevOps pipelines and added nightly testing, which cut deployment time by 30% and reduced post-deploy issues.
 role: DevOps Engineer @ TransCore
 stack: ['Azure DevOps', 'Docker', 'Kubernetes', 'Ansible', 'Bicep']
 impact:
-  - '30% reduction in deployment time.'
-  - 'Nightly automated test pipelines caught regressions before release.'
-  - 'Consistent, reproducible environments via Infrastructure as Code.'
+  - '30% faster deployments.'
+  - 'Nightly automated tests caught regressions before release.'
+  - 'Every environment built the same way from code.'
 order: 3
 ---
 
 ## The problem
 
-Deployments were slow, manual, and inconsistent. Shipping a change meant a sequence of
-hand-run steps, environments drifted from one another, and bugs that should have been caught
-early surfaced in production instead — eroding trust in the release process.
+Deployments were slow, manual, and inconsistent. Shipping a change meant running a bunch of steps
+by hand, environments drifted apart from each other, and bugs that should have been caught early
+showed up in production instead. People stopped trusting the release process.
 
 ## The approach
 
-I designed and implemented **automated CI/CD pipelines in Azure DevOps**, then containerized
-the workloads with **Docker and Kubernetes** so deployments were repeatable and scalable.
-Environment provisioning moved to **Ansible and Bicep**, so every environment was built the
-same way from code. Finally, I added **nightly automated test pipelines** that exercised the
-system and surfaced regressions before they reached a release.
+I built out automated CI/CD pipelines in Azure DevOps, then containerized the workloads with
+Docker and Kubernetes so deployments were repeatable. I moved environment setup to Ansible and
+Bicep so every environment came from the same code. Then I added nightly test pipelines that ran
+against the system and caught regressions before they reached a release.
 
 ## The impact
 
-- **30% faster deployments** — less waiting, more shipping.
-- **Fewer post-deploy issues**, thanks to nightly automated testing.
-- **Consistent environments** that removed an entire class of "works on staging" surprises.
+- Deployments got 30% faster.
+- Far fewer post-deploy issues, thanks to the nightly tests.
+- No more "works on staging" surprises, since every environment was built the same way.

@@ -39,7 +39,7 @@ const experienceCmd: Command = {
   run: () => ({
     output: experience.flatMap((j) => [
       line(`${j.title} @ ${j.company}`, 'green'),
-      line(`  ${j.start} – ${j.end} · ${j.location}`, 'muted'),
+      line(`  ${j.start} to ${j.end} · ${j.location}`, 'muted'),
     ]),
   }),
 };
@@ -71,7 +71,7 @@ const cat: Command = {
     const found = ctx.work.find((w) => w.slug === slug);
     if (!found) return { output: [line(`cat: ${target}: No such file`, 'error')] };
     return {
-      output: [line(`Opening ${found.title}…`, 'green')],
+      output: [line(`Opening ${found.title}...`, 'green')],
       action: { type: 'navigate', target: `/work/${found.slug}` },
     };
   },
@@ -86,7 +86,7 @@ const open: Command = {
     const found = ctx.work.find((w) => w.slug === slug);
     if (!found) return { output: [line(`open: ${slug}: no such project`, 'error')] };
     return {
-      output: [line(`Opening ${found.title}…`, 'green')],
+      output: [line(`Opening ${found.title}...`, 'green')],
       action: { type: 'navigate', target: `/work/${found.slug}` },
     };
   },
@@ -108,7 +108,7 @@ const resume: Command = {
   name: 'resume',
   description: 'download my CV',
   run: () => ({
-    output: [line('Downloading resume.pdf…', 'green')],
+    output: [line('Downloading resume.pdf...', 'green')],
     action: { type: 'download', target: '/resume.pdf' },
   }),
 };
@@ -117,7 +117,7 @@ const underTheHood: Command = {
   name: 'under-the-hood',
   description: 'how this site is built',
   run: () => ({
-    output: [line('Opening /under-the-hood…', 'green')],
+    output: [line('Opening /under-the-hood...', 'green')],
     action: { type: 'navigate', target: '/under-the-hood' },
   }),
 };
@@ -170,7 +170,7 @@ const sudo: Command = {
       return {
         output: [
           line('[sudo] password for recruiter: ********', 'muted'),
-          line('Access granted. Opening contact…', 'green'),
+          line('Access granted. Opening contact...', 'green'),
         ],
         action: { type: 'navigate', target: '/#contact' },
       };
@@ -192,7 +192,7 @@ const help: Command = {
   description: 'show available commands',
   run: () => ({
     output: [
-      line('Available commands — type one, or click "? Commands":', 'amber'),
+      line('Available commands. Type one, or click "? Commands":', 'amber'),
       ...commandList().map((c) => line(`  ${c.name.padEnd(16)} ${c.description}`)),
       line('Press Tab to autocomplete, ↑/↓ for history.', 'muted'),
     ],

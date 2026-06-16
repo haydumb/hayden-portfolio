@@ -1,34 +1,32 @@
 ---
 title: The MCP Mesh
-summary: Unified five disparate MCP servers — New Relic, ArgoCD, Snyk, Azure DevOps, and Scalr — behind one coherent interface.
+summary: Pulled five separate MCP servers (New Relic, ArgoCD, Snyk, Azure DevOps, and Scalr) into one interface engineers actually wanted to use.
 role: DevOps Engineer @ Accuris
 stack: ['Model Context Protocol', 'New Relic', 'ArgoCD', 'Snyk', 'Azure DevOps', 'Scalr', 'Python']
 impact:
-  - 'One interface across observability, deployment, security scanning, and infrastructure.'
-  - 'Higher query accuracy and lower latency than the prior New Relic integration.'
-  - 'Reduced token consumption on the custom New Relic MCP server.'
+  - 'One interface for observability, deployments, security scanning, and infrastructure.'
+  - 'Better query accuracy and lower latency than the old New Relic integration.'
+  - 'Lower token usage on the custom New Relic MCP server.'
 order: 1
 ---
 
 ## The problem
 
-Engineering work was scattered across five separate tools, each with its own MCP server,
-its own quirks, and its own mental model. Context-switching between New Relic for
-observability, ArgoCD for deployments, Snyk for security, Azure DevOps for work tracking,
-and Scalr for infrastructure was a daily tax on every engineer.
+Our engineering work was spread across five separate tools, each with its own MCP server and its
+own quirks. Jumping between New Relic for observability, ArgoCD for deployments, Snyk for security,
+Azure DevOps for tickets, and Scalr for infrastructure added up to a real daily tax.
 
 ## The approach
 
-I architected an **MCP mesh** — a single coherent interface that unified the five servers.
-Rather than five disconnected endpoints, engineers got one surface that routed intent to the
-right backend, normalized responses, and made cross-tool workflows possible.
+I built an MCP mesh that put all five behind one interface. Instead of five disconnected endpoints,
+engineers got one place that routed each request to the right backend and handed back a consistent
+response, so cross-tool workflows finally worked.
 
-Alongside the mesh I built a **custom New Relic MCP server** that outperformed the existing
-solution: it generated more accurate queries, consumed fewer tokens, and returned results
-with lower latency.
+While I was at it, I wrote a custom New Relic MCP server that beat the one we were using. It
+generated more accurate queries, used fewer tokens, and came back faster.
 
 ## The impact
 
-- A single interface across observability, deployment, security scanning, and infrastructure.
-- Measurably better query accuracy and latency than the previous integration.
-- Lower token cost per interaction, reducing the running cost of the tooling.
+- One interface for observability, deployments, security scanning, and infrastructure.
+- Noticeably better query accuracy and latency than the old setup.
+- Lower token cost per request, which lowered what the tooling cost to run.

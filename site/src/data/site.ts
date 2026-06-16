@@ -1,9 +1,9 @@
 export const site = {
   name: 'Hayden Remington',
   role: 'DevOps · SRE · Platform Engineer',
-  tagline: 'Infrastructure that ships itself.',
+  tagline: 'I automate the way software ships.',
   summary:
-    'Nearly 7 years automating CI/CD, scaling cloud infrastructure, and building AI-driven DevOps tooling.',
+    'About 7 years in DevOps. I automate CI/CD, run cloud infrastructure, and build AI tooling that cuts out manual work.',
   email: 'haydenr337@gmail.com',
   github: 'https://github.com/haydumb',
   linkedin: 'https://www.linkedin.com/in/remingtonh/',

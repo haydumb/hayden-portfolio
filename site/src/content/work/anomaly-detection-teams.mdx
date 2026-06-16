@@ -1,33 +1,32 @@
 ---
 title: Anomaly Detection → Microsoft Teams
-summary: A New Relic anomaly-detection tool built with Power Automate that surfaces anomalies and pushes real-time alerts into Microsoft Teams via webhook.
+summary: A New Relic anomaly detector built in Power Automate that catches anomalies and posts real-time alerts to Microsoft Teams.
 role: DevOps Engineer @ Accuris
 stack: ['New Relic', 'Power Automate', 'Microsoft Teams', 'Webhooks']
 impact:
-  - 'Real-time anomaly alerts delivered straight to the team channel.'
-  - 'Faster incident awareness without anyone babysitting dashboards.'
-  - 'No-code automation glue between observability and chat.'
+  - 'Real-time alerts in the channel the team already watches.'
+  - 'Faster awareness of issues, with no dashboards to babysit.'
+  - 'A simple, no-code bridge between observability and chat.'
 order: 4
 ---
 
 ## The problem
 
-Anomalies in New Relic only mattered if someone happened to be looking at the right dashboard
-at the right time. Important signals sat unseen until they became incidents, and the team had
-no lightweight way to be told "something looks off" the moment it happened.
+Anomalies in New Relic only helped if someone was looking at the right dashboard at the right
+moment. Important signals sat there unnoticed until they turned into incidents, and the team had
+no easy way to hear "something looks off" when it happened.
 
 ## The approach
 
-I built an **anomaly-detection workflow with Power Automate** that watched New Relic for
-anomalous behavior and, on detection, **pushed a real-time alert into Microsoft Teams via an
-incoming webhook**. It turned a passive dashboard into an active signal — the data came to the
-team instead of the team going to the data.
+I built a Power Automate workflow that watched New Relic for anomalies and posted an alert into
+Microsoft Teams through an incoming webhook as soon as it caught one. Instead of people checking
+the dashboard, the dashboard came to them.
 
-Keeping it in Power Automate made it transparent and maintainable: the whole flow is readable
-and editable without a deploy, which suited a glue-layer tool that needs to evolve quickly.
+Keeping it in Power Automate kept it easy to read and change. The whole flow is editable without a
+deploy, which is what you want from glue like this.
 
 ## The impact
 
-- **Real-time alerts** in the channel people already watch.
-- **Faster awareness** of issues, with no dashboard babysitting.
-- A clean, **no-code bridge** between observability and team communication.
+- Real-time alerts in the channel the team already watches.
+- Faster awareness, with no dashboards to babysit.
+- A simple, no-code bridge between observability and chat.
